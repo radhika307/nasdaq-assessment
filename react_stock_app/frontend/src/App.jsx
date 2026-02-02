@@ -30,25 +30,28 @@ function App() {
   }, [stock1, stock2, startDate, endDate]);
 
   // Prepare chart data
-  const chartData = data
-    ? {
-        labels: data[stock1].dates,
-        datasets: [
-          {
-            label: stock1,
-            data: data[stock1].prices,
-            borderColor: "blue",
-            fill: false,
-          },
-          {
-            label: stock2,
-            data: data[stock2].prices,
-            borderColor: "green",
-            fill: false,
-          },
-        ],
-      }
-    : null;
+  const chartData =
+    data &&
+    data[s1] &&
+    data[s2] &&
+    data[s1].dates.length > 0 &&
+    data[s2].dates.length > 0
+      ? {
+          labels: data[s1].dates,
+          datasets: [
+            {
+              label: s1,
+              data: data[s1].prices,
+              borderWidth: 2,
+            },
+            {
+              label: s2,
+              data: data[s2].prices,
+              borderWidth: 2,
+            },
+          ],
+        }
+      : null;
 
   return (
     <div className="container">
@@ -123,7 +126,7 @@ function App() {
 
           {chartData && (
             <div className="chart-container">
-              <Line data={chartData} />
+              {chartData && <Line data={chartData} />}
             </div>
           )}
         </>
